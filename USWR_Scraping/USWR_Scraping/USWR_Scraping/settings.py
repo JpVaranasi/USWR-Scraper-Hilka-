@@ -23,11 +23,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-d_oe6^!2ekgeokyh=-zm0jvfs=198jjg+niqj#d@_9i#@axgqy'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = []
-
-
+DEBUG = False
+ALLOWED_HOSTS = ['hilka.onrender.com'] 
 # Application definition
 
 INSTALLED_APPS = [
@@ -51,7 +48,7 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'USWR_Scraping.urls'
-STATIC_URL = '/static/'
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
