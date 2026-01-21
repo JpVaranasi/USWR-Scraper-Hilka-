@@ -1,0 +1,78 @@
+{% load static %}
+
+<html>
+     <style>
+        body{
+            background-color: black;
+            color:white
+        }
+        .row{
+            display:flex;
+            flex-direction: row;
+            justify-content: space-evenly;
+        }
+    </style>
+    <center>
+    <img src="{% static 'logo.jpg' %}" alt="" width="10%" srcset="">
+    </center>
+    <center>
+    <label>ID:</label>
+    <input type="text" name="id" id="prod_id">
+    <button onclick="checkProduct()">Check</button>
+    </center>
+    <center>
+    <div class="row">
+        <div id="result" style="text-align: left;">
+        <ul>
+            <li>Name:Fetching...</li>
+            <li>ID:Fetching...</li>
+            <li>Price:Fetching...</li>
+        </ul>
+        </div>
+        <div id="specs" style="text-align: left;">
+            <p>Fetching specs....</p>
+        </div>
+    </div>
+    </center>
+
+    <center>
+        <button onclick="copier()">Copy CSV</button>
+    </center>
+    <script>
+        let specs = {}
+        function checkProduct(){
+            const prodID = document.getElementById("prod_id").value;
+            fetch(`/check/?prod_id=${prodID}`)
+            .then(response => response.json())
+            .then(data=>{
+                document.getElementById("result").innerHTML=
+                `<ul>
+                    <li>Name: ${data.name}</li>
+                    <li>ID: ${data.id}</li>
+                    <li>Price: ${data.price}</li>
+                </ul>
+                `;
+                specs = data.specs
+                document.getElementById('specs').innerHTML  = "";
+
+                for (const [key, value] of Object.entries(data.specs)) {
+                    document.getElementById('specs').innerHTML += `<p>${key} ${value}</p>`;}
+
+            })
+           
+
+        }
+        function copier(){
+    if (!specs || Object.keys(specs).length === 0)
+        return alert("No specs to copy!");
+
+    // join with tab to paste into separate cells
+    const csv = Object.values(specs).join("\t");
+
+    navigator.clipboard.writeText(csv)
+        .then(() => alert("Copied to clipboard!"))
+        .catch(err => console.error("Copy failed:", err));
+}
+
+    </script>
+</html>
