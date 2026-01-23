@@ -50,6 +50,7 @@ MIDDLEWARE = [
 ROOT_URLCONF = 'USWR_Scraping.urls'
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
+CSRF_TRUSTED_ORIGINS = ['https://hilka.jpvaranasi.com']
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
